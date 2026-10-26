@@ -1,0 +1,4 @@
+# Copy this file to terraform.tfvars and replace the examples.
+# Use your current public IPv4 address with /32 for one address.
+ssh_allowed_cidr = "203.0.113.10/32"
+ec2_key_pair_name = "your-ec2-key-pair-name"
