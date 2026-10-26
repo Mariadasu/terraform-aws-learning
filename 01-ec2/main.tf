@@ -22,15 +22,15 @@ data "aws_vpc" "default" {
 
 resource "aws_security_group" "ssh" {
   name_prefix = "terraform-lab-ssh-"
-  description = "SSH from my current public IP only"
+  description = "SSH from a specified public IPv4 address"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description = "SSH from my Mac"
+    description = "SSH from the configured address"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["REDACTED-CIDR"]
+    cidr_blocks = [var.ssh_allowed_cidr]
   }
 
   egress {
@@ -58,7 +58,7 @@ resource "aws_instance" "lab" {
   ami                         = data.aws_ssm_parameter.al2023_ami.value
   instance_type               = "t3.micro"
   associate_public_ip_address = true
-  key_name                    = "REDACTED-KEY"
+  key_name                    = var.ec2_key_pair_name
   vpc_security_group_ids      = [aws_security_group.ssh.id]
 
   metadata_options {
