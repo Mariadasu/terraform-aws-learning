@@ -22,11 +22,11 @@ data "aws_vpc" "default" {
 
 resource "aws_security_group" "ssh" {
   name_prefix = "terraform-lab-ssh-"
-  description = "SSH from a specified public IPv4 address"
+  description = "SSH from my current public IP only"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description = "SSH from the configured address"
+    description = "SSH from my Mac"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
